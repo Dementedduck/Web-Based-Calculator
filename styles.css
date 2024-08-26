@@ -5,6 +5,7 @@ body {
   flex-direction: column;
   height: 100vh;
   margin: 0;
+  flex-shrink: 0;
 }
 
 .calcContainer {
@@ -14,7 +15,8 @@ body {
   border-radius: 30px 30px 10px 10px;
   padding-bottom: 300px;
   height: 250px;
-  width: auto;
+  width: 300px;
+  flex-shrink: 0;
   padding-left: 15px;
   padding-right: 15px;
   box-shadow: 10px 10px #7b8a92;
@@ -24,22 +26,23 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 60px;
-  gap: 15px;
+  gap: 10px;
   box-shadow: #394246;
+  flex-shrink: 0;
 }
 
-.buttons div {
+.buttons button {
   display: flex;
   align-items: center;
   justify-content: center;
   border: rgb(32, 32, 32);
   border-style: solid;
-  border-width: 1px;
+  border-width: 0.5px;
   border-radius: 5px;
   background-color: #394246;
   color: #b9c2c6;
-  flex-wrap: wrap;
   text-shadow: 2px 1px #000000;
+  flex-shrink: 0;
 }
 
 #calcClear {
@@ -97,6 +100,11 @@ body {
   grid-row: 5;
 }
 
+.calcTop {
+  display: flex;
+  flex-shrink: 0;
+}
+
 #calcDisplay {
   display: flex;
   align-items: center;
@@ -104,8 +112,9 @@ body {
   background-color: papayawhip;
   padding: 10px 40px 10px 40px;
   border-radius: 10px 10px 10px 10px;
+  width: 150px;
+  height: 40px;
+  flex-shrink: 0;
 }
 
-#calcNumbers {
-  font-size: 30px;
-}
+
