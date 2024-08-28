@@ -3,16 +3,31 @@ const numInputs = buttons.querySelectorAll(".numbers");
 const equalsButton = buttons.querySelector("#calcEquals");
 const addButton = buttons.querySelector("#calcAdd");
 const minusButton = buttons.querySelector("#calcMinus");
-const multiplyButton = buttons.querySelector("#calcMultiply")
-const divideButton = buttons.querySelector("#calcDivide")
+const multiplyButton = buttons.querySelector("#calcMultiply");
+const divideButton = buttons.querySelector("#calcDivide");
+const clearButton = buttons.querySelector("#calcClear");
 let storedValue = "";
+let storedValueEqual = "";
 let firstNum = "";
 let secondNum = "";
 let operator = undefined;
+
 let display = document.querySelector("#calcDisplay");
+
 let displayValue = "000000000";
 populateDisplay(displayValue);
 
+function clearAll() {
+let divs = display.querySelectorAll("div");
+divs.forEach((div) => div.remove())
+storedValue = "";
+storedValueEqual = "";
+firstNum = "";
+secondNum = "";
+operator = undefined;
+displayValue = "000000000";
+populateDisplay(displayValue);
+}
 
 function populateDisplay(nums) {
   let dig = document.createElement("div");
@@ -21,6 +36,10 @@ function populateDisplay(nums) {
   dig.style.fontSize = "30px";
   dig.className = "digits";
 }
+
+clearButton.addEventListener("click", () => {
+  clearAll()
+})
 
 divideButton.addEventListener("click", () => {
   let divs = display.querySelectorAll("div");
@@ -102,9 +121,11 @@ equalsButton.addEventListener("click", () => {
 
   secondNum = Number(joined);
 
-  let result = operate(storedValue, secondNum, operator);
+  let result = operate(storedValue, storedValueEqual, secondNum, operator);
   divs.forEach((div) => div.remove());
   populateDisplay(result);
+
+  storedValueEqual = result;
 });
 
 numInputs.forEach((input) => {
@@ -138,20 +159,33 @@ function divide(a, b) {
   return a / b;
 }
 
-function operate(first, second, operate) {
-  if (operate == "+") {
+function operate(first, firstOptional, second, operate) {
+  if (operate == "+" && storedValueEqual == "") {
     let result = add(first, second);
     return result;
-  } else if (operate == "-") {
+  } else if (operate == "-"&& storedValueEqual == "") {
     let result = subtract(first, second);
     return result;
-  } else if (operate == "*") {
+  } else if (operate == "*"&& storedValueEqual == "") {
     let result = multiply(first, second);
     return result;
-  } else if (operate == "/") {
+  } else if (operate == "/"&& storedValueEqual == "") {
     let result = divide(first, second);
     return result;
-  } else {
+  }else if (operate == "+" && storedValueEqual !== "") {
+    let result = add(firstOptional, second);
+    return result;
+  } else if (operate == "-" && storedValueEqual !== "") {
+    let result = subtract(firstOptional, second);
+    return result;
+  } else if (operate == "*" && storedValueEqual !== "") {
+    let result = multiply(firstOptional, second);
+    return result;
+  } else if (operate == "/" && storedValueEqual !== "") {
+    let result = divide(firstOptional, second);
+    return result;
+  }
+  else {
     return "ERRR";
   }
 }
