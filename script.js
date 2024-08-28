@@ -2,12 +2,17 @@ const buttons = document.querySelector(".buttons");
 const numInputs = buttons.querySelectorAll(".numbers");
 const equalsButton = buttons.querySelector("#calcEquals");
 const addButton = buttons.querySelector("#calcAdd");
+const minusButton = buttons.querySelector("#calcMinus");
+const multiplyButton = buttons.querySelector("#calcMultiply")
+const divideButton = buttons.querySelector("#calcDivide")
 let storedValue = "";
 let firstNum = "";
 let secondNum = "";
 let operator = undefined;
 let display = document.querySelector("#calcDisplay");
 let displayValue = "000000000";
+populateDisplay(displayValue);
+
 
 function populateDisplay(nums) {
   let dig = document.createElement("div");
@@ -17,7 +22,54 @@ function populateDisplay(nums) {
   dig.className = "digits";
 }
 
-populateDisplay(displayValue);
+divideButton.addEventListener("click", () => {
+  let divs = display.querySelectorAll("div");
+  let arr = []
+
+  for(let i = 0; i < divs.length; i++) {
+    arr.push(divs[i].innerHTML)
+  }
+  arr.splice(0, 1);
+  let joined = arr.join("");
+  storedValue = Number(joined);
+  operator = "/";
+  
+  divs.forEach((div) => div.remove());
+  populateDisplay(value);
+})
+
+multiplyButton.addEventListener("click", () => {
+  let divs = display.querySelectorAll("div");
+  let arr = []
+
+  for(let i = 0; i < divs.length; i++) {
+    arr.push(divs[i].innerHTML)
+  }
+  arr.splice(0, 1);
+  let joined = arr.join("");
+  storedValue = Number(joined);
+  operator = "*";
+  
+  divs.forEach((div) => div.remove());
+  populateDisplay(value);
+})
+
+
+minusButton.addEventListener("click", () => {
+  let divs = display.querySelectorAll("div");
+  let arr = []
+
+  for(let i = 0; i < divs.length; i++) {
+    arr.push(divs[i].innerHTML)
+  }
+  arr.splice(0, 1);
+  let joined = arr.join("");
+  storedValue = Number(joined);
+  operator = "-";
+  
+  divs.forEach((div) => div.remove());
+  populateDisplay(value);
+})
 
 addButton.addEventListener("click", () => {
   let divs = display.querySelectorAll("div");
@@ -31,18 +83,18 @@ addButton.addEventListener("click", () => {
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "+";
-  divs.textContent = "";
+  
 
   divs.forEach((div) => div.remove());
   populateDisplay(value);
 });
 
 equalsButton.addEventListener("click", () => {
-  let dig = display.querySelectorAll("div");
+  let divs = display.querySelectorAll("div");
   let arr = [];
 
-  for (let i = 0; i < dig.length; i++) {
-    arr.push(dig[i].innerHTML);
+  for (let i = 0; i < divs.length; i++) {
+    arr.push(divs[i].innerHTML);
   }
 
   arr.splice(0, 1);
@@ -51,8 +103,8 @@ equalsButton.addEventListener("click", () => {
   secondNum = Number(joined);
 
   let result = operate(storedValue, secondNum, operator);
-  dig.forEach((div) => div.remove());
-  populateDisplay(result)
+  divs.forEach((div) => div.remove());
+  populateDisplay(result);
 });
 
 numInputs.forEach((input) => {
@@ -89,17 +141,17 @@ function divide(a, b) {
 function operate(first, second, operate) {
   if (operate == "+") {
     let result = add(first, second);
-    return(result);
+    return result;
   } else if (operate == "-") {
     let result = subtract(first, second);
-    return(result);
+    return result;
   } else if (operate == "*") {
     let result = multiply(first, second);
-    return(result);
+    return result;
   } else if (operate == "/") {
     let result = divide(first, second);
-    return(result);
+    return result;
   } else {
-    return("ERRR");
+    return "ERRR";
   }
 }
