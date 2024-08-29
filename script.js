@@ -18,15 +18,15 @@ let displayValue = "000000000";
 populateDisplay(displayValue);
 
 function clearAll() {
-let divs = display.querySelectorAll("div");
-divs.forEach((div) => div.remove())
-storedValue = "";
-storedValueEqual = "";
-firstNum = "";
-secondNum = "";
-operator = undefined;
-displayValue = "000000000";
-populateDisplay(displayValue);
+  let divs = display.querySelectorAll("div");
+  divs.forEach((div) => div.remove());
+  storedValue = "";
+  storedValueEqual = "";
+  firstNum = "";
+  secondNum = "";
+  operator = undefined;
+  displayValue = "000000000";
+  populateDisplay(displayValue);
 }
 
 function populateDisplay(nums) {
@@ -38,57 +38,56 @@ function populateDisplay(nums) {
 }
 
 clearButton.addEventListener("click", () => {
-  clearAll()
-})
+  clearAll();
+});
 
 divideButton.addEventListener("click", () => {
   let divs = display.querySelectorAll("div");
-  let arr = []
+  let arr = [];
 
-  for(let i = 0; i < divs.length; i++) {
-    arr.push(divs[i].innerHTML)
+  for (let i = 0; i < divs.length; i++) {
+    arr.push(divs[i].innerHTML);
   }
   arr.splice(0, 1);
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "/";
-  
+
   divs.forEach((div) => div.remove());
   populateDisplay(value);
-})
+});
 
 multiplyButton.addEventListener("click", () => {
   let divs = display.querySelectorAll("div");
-  let arr = []
+  let arr = [];
 
-  for(let i = 0; i < divs.length; i++) {
-    arr.push(divs[i].innerHTML)
+  for (let i = 0; i < divs.length; i++) {
+    arr.push(divs[i].innerHTML);
   }
   arr.splice(0, 1);
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "*";
-  
+
   divs.forEach((div) => div.remove());
   populateDisplay(value);
-})
-
+});
 
 minusButton.addEventListener("click", () => {
   let divs = display.querySelectorAll("div");
-  let arr = []
+  let arr = [];
 
-  for(let i = 0; i < divs.length; i++) {
-    arr.push(divs[i].innerHTML)
+  for (let i = 0; i < divs.length; i++) {
+    arr.push(divs[i].innerHTML);
   }
   arr.splice(0, 1);
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "-";
-  
+
   divs.forEach((div) => div.remove());
   populateDisplay(value);
-})
+});
 
 addButton.addEventListener("click", () => {
   let divs = display.querySelectorAll("div");
@@ -102,7 +101,6 @@ addButton.addEventListener("click", () => {
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "+";
-  
 
   divs.forEach((div) => div.remove());
   populateDisplay(value);
@@ -122,10 +120,18 @@ equalsButton.addEventListener("click", () => {
   secondNum = Number(joined);
 
   let result = operate(storedValue, storedValueEqual, secondNum, operator);
-  divs.forEach((div) => div.remove());
-  populateDisplay(result);
+  let resultString = result.toString();
+  let digits = resultString.split("");
 
-  storedValueEqual = result;
+  if (digits.length <= 9) {
+    divs.forEach((div) => div.remove());
+    populateDisplay(result);
+
+    storedValueEqual = result;
+  } else {
+    divs.forEach((div) => div.remove());
+    populateDisplay("ERR");
+  }
 });
 
 numInputs.forEach((input) => {
@@ -163,16 +169,16 @@ function operate(first, firstOptional, second, operate) {
   if (operate == "+" && storedValueEqual == "") {
     let result = add(first, second);
     return result;
-  } else if (operate == "-"&& storedValueEqual == "") {
+  } else if (operate == "-" && storedValueEqual == "") {
     let result = subtract(first, second);
     return result;
-  } else if (operate == "*"&& storedValueEqual == "") {
+  } else if (operate == "*" && storedValueEqual == "") {
     let result = multiply(first, second);
     return result;
-  } else if (operate == "/"&& storedValueEqual == "") {
+  } else if (operate == "/" && storedValueEqual == "") {
     let result = divide(first, second);
     return result;
-  }else if (operate == "+" && storedValueEqual !== "") {
+  } else if (operate == "+" && storedValueEqual !== "") {
     let result = add(firstOptional, second);
     return result;
   } else if (operate == "-" && storedValueEqual !== "") {
@@ -184,8 +190,7 @@ function operate(first, firstOptional, second, operate) {
   } else if (operate == "/" && storedValueEqual !== "") {
     let result = divide(firstOptional, second);
     return result;
-  }
-  else {
+  } else {
     return "ERRR";
   }
 }
