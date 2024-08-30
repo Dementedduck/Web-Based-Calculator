@@ -45,6 +45,12 @@ body {
   flex-shrink: 0;
 }
 
+#calcDecimal {
+  grid-row: 2;
+  grid-column: 3;
+  font-size: xx-large;
+}
+
 #calcUndo {
   grid-row: 3;
   grid-column: 4;

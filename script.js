@@ -7,6 +7,9 @@ const multiplyButton = buttons.querySelector("#calcMultiply");
 const divideButton = buttons.querySelector("#calcDivide");
 const clearButton = buttons.querySelector("#calcClear");
 const undoButton = buttons.querySelector("#calcUndo");
+const decimalButton = buttons.querySelector("#calcDecimal")
+
+let decimalState = false
 let storedAnswer = "";
 let storedValue = "";
 let storedValueEqual = "";
@@ -43,6 +46,7 @@ function clearAll() {
   populateDisplay("");
 }
 
+
 function populateDisplay(nums) {
   let dig = document.createElement("div");
   display.insertAdjacentElement("beforeend", dig);
@@ -50,6 +54,10 @@ function populateDisplay(nums) {
   dig.style.fontSize = "30px";
   dig.className = "digits";
 }
+
+decimalButton.addEventListener("click",() => {
+decimalState = true
+})
 
 undoButton.addEventListener("click", () => {
   undo();
@@ -152,21 +160,26 @@ equalsButton.addEventListener("click", () => {
 
 numInputs.forEach((input) => {
   input.addEventListener("click", () => {
-    let digit = display.querySelectorAll(".digits");
-    if (digit.length <= 9 && storedValueEqual == "") {
-      let value = (firstNum += input.innerHTML);
-      populateDisplay(value);
-      firstNum = "";
-    } else if (digit.length <= 9 && storedValueEqual != "") {
-      digit.forEach((div) => div.remove());
-      let value = (firstNum += input.innerHTML);
-      populateDisplay(value);
-      firstNum = "";
-      storedValueEqual = "";
-    }
-    value = "";
+    numControl(input)
+    
   });
 });
+
+function numControl(input) {
+  let digit = display.querySelectorAll(".digits");
+  if (digit.length <= 9 && storedValueEqual == "") {
+    let value = (firstNum += input.innerHTML);
+    populateDisplay(value);
+    firstNum = "";
+  } else if (digit.length <= 9 && storedValueEqual != "") {
+    digit.forEach((div) => div.remove());
+    let value = (firstNum += input.innerHTML);
+    populateDisplay(value);
+    firstNum = "";
+    storedValueEqual = "";
+  }
+value = "";
+}
 
 function add(a, b) {
   return a + b;
