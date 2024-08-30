@@ -45,8 +45,13 @@ body {
   flex-shrink: 0;
 }
 
-#calcClear {
+#calcUndo {
   grid-row: 3;
+  grid-column: 4;
+}
+
+#calcClear {
+  grid-row: 2;
   grid-column: 4;
   color: rgb(255, 74, 74);
 }

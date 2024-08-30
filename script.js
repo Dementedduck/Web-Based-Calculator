@@ -6,6 +6,8 @@ const minusButton = buttons.querySelector("#calcMinus");
 const multiplyButton = buttons.querySelector("#calcMultiply");
 const divideButton = buttons.querySelector("#calcDivide");
 const clearButton = buttons.querySelector("#calcClear");
+const undoButton = buttons.querySelector("#calcUndo");
+let storedAnswer = "";
 let storedValue = "";
 let storedValueEqual = "";
 let firstNum = "";
@@ -14,8 +16,21 @@ let operator = undefined;
 
 let display = document.querySelector("#calcDisplay");
 
-let displayValue = "000000000";
-populateDisplay(displayValue);
+
+
+function undo() {
+  let divs = display.querySelectorAll("div");
+  let arr = []
+  for (let i = 0; i < divs.length; i++) {
+    arr.push(divs[i].innerHTML);
+  }
+
+  let result = arr.toString()
+    .replace(/,/g,"")
+    .slice(0, -1)
+    divs.forEach((div) => div.remove());
+    populateDisplay(result)
+}
 
 function clearAll() {
   let divs = display.querySelectorAll("div");
@@ -25,8 +40,7 @@ function clearAll() {
   firstNum = "";
   secondNum = "";
   operator = undefined;
-  displayValue = "000000000";
-  populateDisplay(displayValue);
+  populateDisplay("");
 }
 
 function populateDisplay(nums) {
@@ -36,6 +50,10 @@ function populateDisplay(nums) {
   dig.style.fontSize = "30px";
   dig.className = "digits";
 }
+
+undoButton.addEventListener("click", () => {
+  undo();
+})
 
 clearButton.addEventListener("click", () => {
   clearAll();
@@ -48,7 +66,7 @@ divideButton.addEventListener("click", () => {
   for (let i = 0; i < divs.length; i++) {
     arr.push(divs[i].innerHTML);
   }
-  arr.splice(0, 1);
+  
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "/";
@@ -64,7 +82,7 @@ multiplyButton.addEventListener("click", () => {
   for (let i = 0; i < divs.length; i++) {
     arr.push(divs[i].innerHTML);
   }
-  arr.splice(0, 1);
+  
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "*";
@@ -80,7 +98,7 @@ minusButton.addEventListener("click", () => {
   for (let i = 0; i < divs.length; i++) {
     arr.push(divs[i].innerHTML);
   }
-  arr.splice(0, 1);
+
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "-";
@@ -97,7 +115,6 @@ addButton.addEventListener("click", () => {
     arr.push(divs[i].innerHTML);
   }
 
-  arr.splice(0, 1);
   let joined = arr.join("");
   storedValue = Number(joined);
   operator = "+";
@@ -114,19 +131,18 @@ equalsButton.addEventListener("click", () => {
     arr.push(divs[i].innerHTML);
   }
 
-  arr.splice(0, 1);
   let joined = arr.join("");
 
   secondNum = Number(joined);
 
   let result = operate(storedValue, storedValueEqual, secondNum, operator);
-  let resultString = result.toString();
+  let resultRounded = +result.toFixed(3)
+  let resultString = resultRounded.toString();
   let digits = resultString.split("");
 
   if (digits.length <= 9) {
     divs.forEach((div) => div.remove());
-    populateDisplay(result);
-
+    populateDisplay(resultRounded);
     storedValueEqual = result;
   } else {
     divs.forEach((div) => div.remove());
@@ -137,13 +153,16 @@ equalsButton.addEventListener("click", () => {
 numInputs.forEach((input) => {
   input.addEventListener("click", () => {
     let digit = display.querySelectorAll(".digits");
-
-    if (digit.length <= 9) {
+    if (digit.length <= 9 && storedValueEqual == "") {
       let value = (firstNum += input.innerHTML);
-      let dig = display.querySelector("div");
-      dig.textContent = "";
       populateDisplay(value);
       firstNum = "";
+    } else if (digit.length <= 9 && storedValueEqual != "") {
+      digit.forEach((div) => div.remove());
+      let value = (firstNum += input.innerHTML);
+      populateDisplay(value);
+      firstNum = "";
+      storedValueEqual = "";
     }
     value = "";
   });
