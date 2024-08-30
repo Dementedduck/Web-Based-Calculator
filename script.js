@@ -9,7 +9,6 @@ const clearButton = buttons.querySelector("#calcClear");
 const undoButton = buttons.querySelector("#calcUndo");
 const decimalButton = buttons.querySelector("#calcDecimal")
 
-let decimalState = false
 let storedAnswer = "";
 let storedValue = "";
 let storedValueEqual = "";
@@ -19,7 +18,7 @@ let operator = undefined;
 
 let display = document.querySelector("#calcDisplay");
 
-
+//Functions
 
 function undo() {
   let divs = display.querySelectorAll("div");
@@ -54,6 +53,116 @@ function populateDisplay(nums) {
   dig.style.fontSize = "30px";
   dig.className = "digits";
 }
+
+function numControl(input) {
+  let digit = display.querySelectorAll(".digits");
+  if (digit.length <= 9 && storedValueEqual == "") {
+    let value = (firstNum += input.innerHTML);
+    populateDisplay(value);
+    firstNum = "";
+  } else if (digit.length <= 9 && storedValueEqual != "") {
+    digit.forEach((div) => div.remove());
+    let value = (firstNum += input.innerHTML);
+    populateDisplay(value);
+    firstNum = "";
+    storedValueEqual = "";
+  }
+value = "";
+}
+
+//Operations 
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  return a / b;
+}
+
+//Operator
+
+function operate(first, firstOptional, second, operate) {
+  if (operate == "+" && storedValueEqual == "") {
+    let result = add(first, second);
+    return result;
+  } else if (operate == "-" && storedValueEqual == "") {
+    let result = subtract(first, second);
+    return result;
+  } else if (operate == "*" && storedValueEqual == "") {
+    let result = multiply(first, second);
+    return result;
+  } else if (operate == "/" && storedValueEqual == "") {
+    let result = divide(first, second);
+    return result;
+  } else if (operate == "+" && storedValueEqual !== "") {
+    let result = add(firstOptional, second);
+    return result;
+  } else if (operate == "-" && storedValueEqual !== "") {
+    let result = subtract(firstOptional, second);
+    return result;
+  } else if (operate == "*" && storedValueEqual !== "") {
+    let result = multiply(firstOptional, second);
+    return result;
+  } else if (operate == "/" && storedValueEqual !== "") {
+    let result = divide(firstOptional, second);
+    return result;
+  } else {
+    return "ERRR";
+  }
+}
+
+//Button Events
+document.addEventListener("keydown", function(e) {
+  if (e.key == 1) {
+document.getElementById("one").click()
+  }
+  if (e.key == 2) {
+    document.getElementById("two").click()
+  }if (e.key == 3) {
+    document.getElementById("three").click()
+  }if (e.key == 4) {
+    document.getElementById("four").click()
+  }if (e.key == 5) {
+    document.getElementById("five").click()
+  }if (e.key == 6) {
+    document.getElementById("six").click()
+  }if (e.key == 7) {
+    document.getElementById("seven").click()
+  }if (e.key == 8) {
+    document.getElementById("eight").click()
+  }if (e.key == 9) {
+    document.getElementById("nine").click()
+  }if (e.key == 0) {
+    document.getElementById("zero").click()
+
+  }if (e.key == "+") {
+    document.getElementById("calcAdd").click()
+  }if (e.key == "-") {
+    document.getElementById("calcMinus").click()
+  }if (e.key == "x") {
+    document.getElementById("calcMultiply").click()
+  }if (e.key == "/") {
+    document.getElementById("calcDivide").click()
+  }if (e.key == "=") {
+    document.getElementById("calcEquals").click()
+  }if (e.key == ".") {
+    document.getElementById("calcDecimal").click()
+  }if (e.key == "Backspace") {
+    document.getElementById("calcUndo").click()
+  }if (e.key == "Escape") {
+    document.getElementById("calcClear").click()
+  }
+})
+
 
 decimalButton.addEventListener("click",() => {
 decimalState = true
@@ -161,68 +270,6 @@ equalsButton.addEventListener("click", () => {
 numInputs.forEach((input) => {
   input.addEventListener("click", () => {
     numControl(input)
-    
   });
 });
 
-function numControl(input) {
-  let digit = display.querySelectorAll(".digits");
-  if (digit.length <= 9 && storedValueEqual == "") {
-    let value = (firstNum += input.innerHTML);
-    populateDisplay(value);
-    firstNum = "";
-  } else if (digit.length <= 9 && storedValueEqual != "") {
-    digit.forEach((div) => div.remove());
-    let value = (firstNum += input.innerHTML);
-    populateDisplay(value);
-    firstNum = "";
-    storedValueEqual = "";
-  }
-value = "";
-}
-
-function add(a, b) {
-  return a + b;
-}
-
-function subtract(a, b) {
-  return a - b;
-}
-
-function multiply(a, b) {
-  return a * b;
-}
-
-function divide(a, b) {
-  return a / b;
-}
-
-function operate(first, firstOptional, second, operate) {
-  if (operate == "+" && storedValueEqual == "") {
-    let result = add(first, second);
-    return result;
-  } else if (operate == "-" && storedValueEqual == "") {
-    let result = subtract(first, second);
-    return result;
-  } else if (operate == "*" && storedValueEqual == "") {
-    let result = multiply(first, second);
-    return result;
-  } else if (operate == "/" && storedValueEqual == "") {
-    let result = divide(first, second);
-    return result;
-  } else if (operate == "+" && storedValueEqual !== "") {
-    let result = add(firstOptional, second);
-    return result;
-  } else if (operate == "-" && storedValueEqual !== "") {
-    let result = subtract(firstOptional, second);
-    return result;
-  } else if (operate == "*" && storedValueEqual !== "") {
-    let result = multiply(firstOptional, second);
-    return result;
-  } else if (operate == "/" && storedValueEqual !== "") {
-    let result = divide(firstOptional, second);
-    return result;
-  } else {
-    return "ERRR";
-  }
-}
