@@ -135,7 +135,7 @@ body {
 }
 
 
-
+.buttons button:hover {background:#2e3538}
 .active {
   transform: translateY(2px);
 }
