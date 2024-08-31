@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "DSEG14ModernBold";
+  src: url(font/DSEG14ModernMini-Regular.ttf);
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -127,11 +132,12 @@ body {
   align-items: center;
   margin: 25px 20px 40px 20px;
   background-color: papayawhip;
-  padding: 10px 40px 10px 40px;
+  padding: 10px 90px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   width: 150px;
   height: 40px;
   flex-shrink: 0;
+  font-family: "DSEG14ModernBold";
 }
 
 
