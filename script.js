@@ -8,6 +8,7 @@ const divideButton = buttons.querySelector("#calcDivide");
 const clearButton = buttons.querySelector("#calcClear");
 const undoButton = buttons.querySelector("#calcUndo");
 const decimalButton = buttons.querySelector("#calcDecimal")
+const allButtons = buttons.querySelectorAll("button")
 
 let storedAnswer = "";
 let storedValue = "";
@@ -121,6 +122,7 @@ function operate(first, firstOptional, second, operate) {
 }
 
 //Button Events
+
 document.addEventListener("keydown", function(e) {
   if (e.key == 1) {
 document.getElementById("one").click()
@@ -152,7 +154,7 @@ document.getElementById("one").click()
     document.getElementById("calcMultiply").click()
   }if (e.key == "/") {
     document.getElementById("calcDivide").click()
-  }if (e.key == "=") {
+  }if (e.key == "Enter" || e.key == "=") {
     document.getElementById("calcEquals").click()
   }if (e.key == ".") {
     document.getElementById("calcDecimal").click()
@@ -273,3 +275,15 @@ numInputs.forEach((input) => {
   });
 });
 
+//Small cosmetic things
+
+allButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    button.classList.toggle("active")
+    button.style.background = " #171b1c"
+    button.style.transition = "background 0.5s"
+    setTimeout(() => { button.classList.remove('active');}, 100);
+    setTimeout(() => {button.style.background = "";}, 200);
+  })
+  
+})

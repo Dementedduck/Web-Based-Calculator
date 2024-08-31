@@ -6,15 +6,21 @@ body {
   height: 100vh;
   margin: 0;
   flex-shrink: 0;
+  background-color: #8A7975;
+  background: linear-gradient(#8A7975,
+  #000000a6
+  )
 }
 
 .calcContainer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   background-color: #90a4ae;
   border-radius: 30px 30px 10px 10px;
   padding-bottom: 300px;
-  height: 250px;
+  height: 200px;
   width: 300px;
   flex-shrink: 0;
   padding-left: 15px;
@@ -25,9 +31,12 @@ body {
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 60px;
-  gap: 10px;
-  box-shadow: #394246;
+  grid-auto-rows: auto;
+  margin-top: 50px;
+  background-color: #30383b3a;
+  padding: 10px;
+  border-radius: 10px;
+  gap: 6px;
   flex-shrink: 0;
 }
 
@@ -39,21 +48,23 @@ body {
   border-style: solid;
   border-width: 0.5px;
   border-radius: 5px;
-  background-color: #394246;
+
+  background: #394246;
   color: #b9c2c6;
   text-shadow: 2px 1px #000000;
   flex-shrink: 0;
-}
-
-#calcDecimal {
-  grid-row: 2;
-  grid-column: 3;
   font-size: xx-large;
 }
 
-#calcUndo {
+#calcDecimal {
   grid-row: 3;
   grid-column: 4;
+}
+
+#calcUndo {
+  grid-row: 2;
+  grid-column: 3;
+  color: #4da6ff;
 }
 
 #calcClear {
@@ -114,7 +125,7 @@ body {
 #calcDisplay {
   display: flex;
   align-items: center;
-  margin: 25px 20px 0px 20px;
+  margin: 25px 20px 40px 20px;
   background-color: papayawhip;
   padding: 10px 40px 10px 40px;
   border-radius: 10px 10px 10px 10px;
@@ -124,3 +135,7 @@ body {
 }
 
 
+
+.active {
+  transform: translateY(2px);
+}
